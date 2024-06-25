@@ -25,54 +25,48 @@ document.addEventListener('DOMContentLoaded', function () {
     let autoCollectorLevel = localStorage.getItem('autoCollectorLevel') ? parseInt(localStorage.getItem('autoCollectorLevel')) : 0;
     let autoCollectorCost = 20000 * Math.pow(2, autoCollectorLevel);
     let referralCount = localStorage.getItem('referralCount') ? parseInt(localStorage.getItem('referralCount')) : 0;
-    let dailyBonusClaimed = localStorage.getItem('dailyBonusClaimed') ? JSON.parse(localStorage.getItem('dailyBonusClaimed')) : false;
+    let dailyBonusClaimed = localStorage.getItem('dailyBonusClaimed') === 'true';
     let lastLoginTime = localStorage.getItem('lastLoginTime') ? parseInt(localStorage.getItem('lastLoginTime')) : Date.now();
+    let referralReward = localStorage.getItem('referralReward') ? parseInt(localStorage.getItem('referralReward')) : 0;
 
     homeScore.innerText = `Coins Collected: ${balance}`;
     upgradeCostElement.innerText = upgradeCost;
     coinValueElement.innerText = coinValue;
     coinCountText.innerText = `${coinCount} / 10000`;
     autoCollectorLevelElement.innerText = autoCollectorLevel;
-    autoCollectorCost = Math.pow(2, autoCollectorLevel) * 20000;
-    referralLink.value = `${window.location.origin}?ref=${generateReferralCode()}`;
+    autoCollectorButton.innerText = `Buy Auto Collector (Level: ${autoCollectorLevel}, Cost: ${autoCollectorCost} coins)`;
     friendsCountElement.innerText = `Friends Referred: ${referralCount}`;
-    updateReferralReward();
 
-    if (!dailyBonusClaimed) {
+    if (dailyBonusClaimed) {
         setBonusTimer();
-    } else {
-        updateBonusMessage();
     }
 
-    // Обновление монет каждые 10 секунд
-    setInterval(() => {
-        if (coinCount < 10000) {
-            coinCount += 50;
-            if (coinCount > 10000) {
-                coinCount = 10000;
-            }
-            coinCountText.innerText = `${coinCount} / 10000`;
-            localStorage.setItem('coinCount', coinCount);
-        }
-    }, 10000);
+    if (autoCollectorLevel > 0) {
+        startAutoCollector();
+    }
 
-    // Обработчик кликов на коин
     coin.addEventListener('click', function () {
         if (coinCount > 0) {
             balance += coinValue;
-            coinCount -= coinValue;
-
+            coinCount -= 1;
             homeScore.innerText = `Coins Collected: ${balance}`;
             coinCountText.innerText = `${coinCount} / 10000`;
 
             localStorage.setItem('balance', balance);
             localStorage.setItem('coinCount', coinCount);
         } else {
-            alert('Out of coins! Wait for more coins to be generated.');
+            alert('No more coins available. Please wait for refill.');
         }
     });
 
-    // Обработчик кнопки улучшения
+    setInterval(() => {
+        if (coinCount < 10000) {
+            coinCount = Math.min(10000, coinCount + 50);
+            coinCountText.innerText = `${coinCount} / 10000`;
+            localStorage.setItem('coinCount', coinCount);
+        }
+    }, 10000);
+
     upgradeButton.addEventListener('click', function () {
         if (balance >= upgradeCost) {
             balance -= upgradeCost;
@@ -91,7 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Обработчик кнопки автоматического сбора
     autoCollectorButton.addEventListener('click', function () {
         if (balance >= autoCollectorCost) {
             balance -= autoCollectorCost;
@@ -113,14 +106,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Обработчик копирования ссылки
     copyLinkButton.addEventListener('click', function () {
         referralLink.select();
         document.execCommand('copy');
         alert('Referral link copied to clipboard!');
     });
 
-    // Обработчик получения ежедневного бонуса
     claimBonusButton.addEventListener('click', function () {
         if (!dailyBonusClaimed) {
             const daysPassed = Math.floor((Date.now() - lastLoginTime) / (24 * 60 * 60 * 1000));
@@ -141,7 +132,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Обработчик переключения вкладок
     tabButtons.forEach(button => {
         button.addEventListener('click', function () {
             tabButtons.forEach(btn => btn.classList.remove('active'));
@@ -152,7 +142,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Функция запуска автособирания
     function startAutoCollector() {
         setInterval(() => {
             const idleTime = (Date.now() - lastLoginTime) / 1000;
@@ -168,7 +157,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 10000);
     }
 
-    // Функция установки таймера бонуса
     function setBonusTimer() {
         const nextBonusTime = new Date(lastLoginTime + 24 * 60 * 60 * 1000);
         const interval = setInterval(() => {
@@ -186,19 +174,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 1000);
     }
 
-    // Функция обновления сообщения бонуса
     function updateBonusMessage() {
         const daysPassed = Math.floor((Date.now() - lastLoginTime) / (24 * 60 * 60 * 1000));
         const dailyBonus = Math.min(50 * Math.pow(3.5, daysPassed), 1000000);
         bonusMessage.innerText = `You have claimed ${dailyBonus} coins!`;
     }
 
-    // Функция генерации реферального кода
     function generateReferralCode() {
         return Math.random().toString(36).substr(2, 9);
     }
 
-    // Функция обновления вознаграждения за друга
     function updateReferralReward() {
         let reward;
         if (referralCount < 12) {
