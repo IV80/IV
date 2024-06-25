@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const bonusMessage = document.getElementById('bonusMessage');
     const bonusTimer = document.getElementById('bonusTimer');
 
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+
     let balance = localStorage.getItem('balance') ? parseInt(localStorage.getItem('balance')) : 0;
     let coinValue = localStorage.getItem('coinValue') ? parseInt(localStorage.getItem('coinValue')) : 1;
     let upgradeCost = coinValue * 50;
@@ -74,20 +77,21 @@ document.addEventListener('DOMContentLoaded', function () {
         if (balance >= upgradeCost) {
             balance -= upgradeCost;
             coinValue += 1;
-            upgradeCost = Math.floor(upgradeCost * 2.5);
+            upgradeCost = coinValue * 50;
 
             homeScore.innerText = `Coins Collected: ${balance}`;
-            coinValueElement.innerText = coinValue;
             upgradeCostElement.innerText = upgradeCost;
+            coinValueElement.innerText = coinValue;
 
             localStorage.setItem('balance', balance);
             localStorage.setItem('coinValue', coinValue);
+            localStorage.setItem('upgradeCost', upgradeCost);
         } else {
             alert('Not enough coins!');
         }
     });
 
-    // Обработчик кнопки автособирания
+    // Обработчик кнопки автоматического сбора
     autoCollectorButton.addEventListener('click', function () {
         if (balance >= autoCollectorCost) {
             balance -= autoCollectorCost;
@@ -135,6 +139,17 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             alert('Bonus already claimed today!');
         }
+    });
+
+    // Обработчик переключения вкладок
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            this.classList.add('active');
+            document.getElementById(this.dataset.tab).classList.add('active');
+        });
     });
 
     // Функция запуска автособирания
