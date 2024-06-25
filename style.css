@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     background-color: #f7f2e8;
     margin: 0;
     display: flex;
@@ -16,6 +16,8 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     overflow: hidden;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 #coin-container {
@@ -23,23 +25,34 @@ body {
     justify-content: center;
     align-items: center;
     height: 200px;
+    background-color: #ffebcd;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
 
 #coin {
     font-size: 64px;
     cursor: pointer;
     user-select: none;
+    color: #d4af37; /* Цвет золота */
 }
 
 #coin-count-bar {
     width: 100%;
-    background-color: #ddd;
+    background-color: #ffe;
     text-align: center;
     padding: 10px;
     font-weight: bold;
-    border-radius: 10px;
+    border-radius: 15px;
     margin: 20px 0;
-    background: #ffe;
+    border: 2px solid #d4af37; /* Золотая рамка */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#coin-count {
+    color: #d4af37; /* Цвет текста золота */
 }
 
 #content {
