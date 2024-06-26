@@ -51,10 +51,12 @@ body {
 
 .tab-content {
     display: none;
+    text-align: center;
 }
 
 .tab-content.active {
     display: block;
+    text-align: center;
 }
 
 #nav {
@@ -101,4 +103,23 @@ input[readonly] {
     padding: 10px;
     margin-bottom: 10px;
     box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    background: #d4af37;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #b39231;
 }
