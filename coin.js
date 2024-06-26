@@ -1,29 +1,39 @@
 // scripts/coin.js
 document.addEventListener('DOMContentLoaded', function() {
     const coin = document.getElementById('coin');
-    let coinCount = 10000;
-    const maxCoins = 10000;
-    const coinCountElement = document.getElementById('coin-count');
-    
-    function updateCoinCountDisplay() {
-        coinCountElement.textContent = `${coinCount} / ${maxCoins}`;
+    const coinCountBar = document.getElementById('coin-count');
+    const homeScore = document.getElementById('home-score');
+
+    let coinsCollected = 0;
+    let coinLimit = 10000;
+
+    function updateCoinCountBar() {
+        coinCountBar.textContent = `${coinLimit} / 10000`;
     }
 
     function addCoins(amount) {
-        coinCount = Math.min(coinCount + amount, maxCoins);
-        updateCoinCountDisplay();
+        if (coinLimit > 0) {
+            coinsCollected += amount;
+            coinLimit -= amount;
+            homeScore.textContent = coinsCollected;
+            updateCoinCountBar();
+        }
     }
 
     coin.addEventListener('click', () => {
-        if (coinCount > 0) {
-            addCoins(-1);
-            // Update user's coin balance in the game logic
-        }
+        addCoins(1);
     });
 
-    setInterval(() => {
-        addCoins(50); // Add coins every 10 seconds
-    }, 10000);
+    updateCoinCountBar();
 
-    updateCoinCountDisplay();
+    // Автоматическое пополнение монет
+    setInterval(() => {
+        if (coinLimit < 10000) {
+            coinLimit += 50;
+            if (coinLimit > 10000) {
+                coinLimit = 10000;
+            }
+            updateCoinCountBar();
+        }
+    }, 10000);
 });
