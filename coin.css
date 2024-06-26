@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 500px; /* Увеличиваем размер контейнера */
+    height: 200px; /* Увеличиваем размер контейнера */
     background-color: #ffebcd;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -23,6 +23,8 @@
     user-select: none;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     transition: transform 0.1s;
+    text-align: center;
+    line-height: 250px;
 }
 
 #coin:hover {
