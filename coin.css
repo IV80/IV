@@ -3,10 +3,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200px; /* Увеличиваем размер контейнера */
+    height: 300px; /* Увеличиваем размер контейнера */
     background-color: #ffebcd;
     border-radius: 10px;
     margin-bottom: 20px;
+    position: relative;
 }
 
 #coin {
