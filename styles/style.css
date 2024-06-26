@@ -73,7 +73,8 @@ body {
 .tab-button {
     flex-grow: 1;
     padding: 10px;
-    background: #fff;
+    background: #d4af37; /* Исправляем цвет кнопок */
+    color: #fff;
     border: none;
     cursor: pointer;
     font-size: 16px;
@@ -86,11 +87,11 @@ body {
 }
 
 .tab-button:hover {
-    background: #eee;
+    background: #b39231;
 }
 
 .tab-button.active {
-    background: #ddd;
+    background: #b39231;
 }
 
 button:disabled {
