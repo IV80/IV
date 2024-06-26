@@ -1,26 +1,25 @@
 // scripts/navigation.js
 document.addEventListener('DOMContentLoaded', function() {
-    function showTab(tabName) {
+    function switchTab(tabId) {
         document.querySelectorAll('.tab-content').forEach(tab => {
             tab.classList.remove('active');
         });
-        document.getElementById(tabName).classList.add('active');
-
         document.querySelectorAll('.tab-button').forEach(button => {
             button.classList.remove('active');
-            if (button.getAttribute('data-tab') === tabName) {
-                button.classList.add('active');
-            }
         });
+        document.getElementById(tabId).classList.add('active');
+        document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+        localStorage.setItem('activeTab', tabId); // Save active tab in localStorage
     }
 
     document.querySelectorAll('.tab-button').forEach(button => {
-        button.addEventListener('click', () => {
-            const tab = button.getAttribute('data-tab');
-            showTab(tab);
+        button.addEventListener('click', function() {
+            const tabId = this.getAttribute('data-tab');
+            switchTab(tabId);
         });
     });
 
-    // Показать первую вкладку при загрузке
-    showTab('home');
+    // Initialize the first tab or the last active tab
+    const activeTab = localStorage.getItem('activeTab') || 'home';
+    switchTab(activeTab);
 });
