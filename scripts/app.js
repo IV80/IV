@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
     upgradeButton.addEventListener('click', () => {
         if (coinsCollected >= upgradeCost) {
             coinsCollected -= upgradeCost;
-            coinValue += 1;
-            upgradeCost *= 3;
+            coinValue += 1;  // Увеличение на 1 монету
+            upgradeCost *= 3;  // Увеличение стоимости в 3 раза
             updateUI();
             saveProgress();
         }
