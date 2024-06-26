@@ -11,7 +11,7 @@ body {
 }
 
 #app {
-    width: 100%;
+    width: 90%;
     max-width: 500px;
     background: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -22,23 +22,22 @@ body {
 }
 
 #coin-count-bar {
-    width: auto; /* Устанавливаем ширину в зависимости от текста */
+    width: auto;
     max-width: 100%;
     background-color: #ffe;
     text-align: center;
-    padding: 10px 20px; /* Уменьшаем внутренний отступ */
+    padding: 5px 10px;
     font-weight: bold;
     border-radius: 15px;
     margin: 20px 0;
-    border: 2px solid #d4af37; /* Золотая рамка */
+    border: 2px solid #d4af37;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-sizing: border-box;
 }
 
 #coin-count {
-    color: #d4af37; /* Цвет текста золота */
+    color: #d4af37;
 }
 
 #content {
@@ -58,6 +57,7 @@ body {
     justify-content: space-between;
     border-top: 1px solid #ddd;
     background-color: #fff;
+    padding: 10px 0;
 }
 
 .tab-button {
@@ -72,6 +72,7 @@ body {
     transition: background 0.3s;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    margin: 0 5px;
 }
 
 .tab-button:hover {
