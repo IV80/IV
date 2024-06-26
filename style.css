@@ -19,6 +19,7 @@ body {
     overflow: hidden;
     padding: 20px;
     box-sizing: border-box;
+    position: relative;
 }
 
 #coin-count-bar {
@@ -34,6 +35,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }
 
 #coin-count {
@@ -42,6 +46,7 @@ body {
 
 #content {
     padding: 20px;
+    margin-top: 60px;
 }
 
 .tab-content {
@@ -58,6 +63,9 @@ body {
     border-top: 1px solid #ddd;
     background-color: #fff;
     padding: 10px 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 .tab-button {
