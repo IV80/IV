@@ -3,65 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IVsim - Click the Coin</title>
-    <link rel="stylesheet" href="styles/style.css">
-    <link rel="stylesheet" href="styles/coin.css">
-    <link rel="stylesheet" href="styles/navigation.css">
+    <title>Coin Collector Game</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/home.css">
+    <link rel="stylesheet" href="styles/coins.css">
     <link rel="stylesheet" href="styles/pump.css">
     <link rel="stylesheet" href="styles/friends.css">
     <link rel="stylesheet" href="styles/dailyBonus.css">
     <link rel="stylesheet" href="styles/trade.css">
-    <script src="https://unpkg.com/i18next@21.8.15/i18next.min.js"></script>
-    <script src="scripts/app.js" defer></script>
-    <script src="scripts/navigation.js" defer></script>
-    <script src="scripts/coin.js" defer></script>
-    <script src="scripts/pump.js" defer></script>
-    <script src="scripts/friends.js" defer></script>
-    <script src="scripts/dailyBonus.js" defer></script>
-    <script src="scripts/trade.js" defer></script>
 </head>
 <body>
-    <div id="app">
-        <div id="coin-count-bar">
-            <span id="coin-count">10000 / 10000</span>
-        </div>
-        <div id="content">
-            <div id="home" class="tab-content active">
-                <div id="coin" class="coin">IV</div>
-                <p id="home-score">Coins Collected: 0</p>
-            </div>
-            <div id="pump" class="tab-content">
-                <h2>Pump</h2>
-                <button id="upgradeButton">Upgrade TAP (Cost: <span id="upgradeCost">100</span> coins)</button>
-                <p>Current coin value: <span id="coinValue">1</span> coins per click</p>
-                <h2>Auto Collector</h2>
-                <button id="autoCollectorButton">Upgrade Auto Collector (Cost: <span id="autoCollectorCost">20000</span> coins)</button>
-                <p>Current Level: <span id="autoCollectorLevel">0</span></p>
-            </div>
-            <div id="friends" class="tab-content">
-                <h2>Friends</h2>
-                <input type="text" id="referralLink" readonly>
-                <button id="copyLinkButton">Copy Link</button>
-                <p>Friends Referred: <span id="friendsCount">0</span></p>
-            </div>
-            <div id="daily-bonus" class="tab-content">
-                <h2>Daily Bonus</h2>
-                <button id="claimBonusButton">Claim Daily Bonus</button>
-                <p id="bonusMessage"></p>
-                <p id="bonusTimer"></p>
-            </div>
-            <div id="trade" class="tab-content">
-                <h2>Trade</h2>
-                <p>Trading is coming soon. Stay tuned!</p>
-            </div>
-        </div>
-        <div id="nav">
-            <button class="tab-button active" data-tab="home">Home</button>
-            <button class="tab-button" data-tab="pump">Pump</button>
-            <button class="tab-button" data-tab="friends">Friends</button>
-            <button class="tab-button" data-tab="daily-bonus">Daily Bonus</button>
-            <button class="tab-button" data-tab="trade" disabled>Trade</button>
-        </div>
+    <div class="navbar">
+        <button class="tab-button active" data-tab="home">Home</button>
+        <button class="tab-button" data-tab="coins">Coins</button>
+        <button class="tab-button" data-tab="pump">Pump</button>
+        <button class="tab-button" data-tab="friends">Friends</button>
+        <button class="tab-button" data-tab="dailyBonus">Daily Bonus</button>
+        <button class="tab-button" data-tab="trade">Trade</button>
     </div>
+    <div id="home" class="tab-content active">
+        <h1>Welcome to the Coin Collector Game!</h1>
+        <p>Collect coins by clicking the coin below:</p>
+        <img id="coin" src="coin.png" alt="Coin" width="100">
+        <div id="home-score">Coins Collected: 0</div>
+    </div>
+    <div id="coins" class="tab-content">
+        <div id="coin-count-bar">0 / 10000</div>
+        <button id="collectCoins">Collect Coins</button>
+    </div>
+    <div id="pump" class="tab-content">
+        <button id="upgradeButton">Upgrade</button>
+        <div>Coin Value: <span id="coinValue">1</span></div>
+        <div>Upgrade Cost: <span id="upgradeCost">100</span></div>
+        <button id="autoCollectorButton">Auto Collector</button>
+        <div>Auto Collector Level: <span id="autoCollectorLevel">0</span></div>
+        <div>Auto Collector Cost: <span id="autoCollectorCost">20000</span></div>
+    </div>
+    <div id="friends" class="tab-content">
+        <input type="text" id="referralLink" readonly>
+        <button id="copyLinkButton">Copy Referral Link</button>
+        <div id="friendsCount">0</div>
+    </div>
+    <div id="dailyBonus" class="tab-content">
+        <button id="claimBonusButton">Claim Daily Bonus</button>
+        <div id="bonusMessage"></div>
+        <div id="bonusTimer"></div>
+    </div>
+    <div id="trade" class="tab-content">
+        <p>Trade your coins here!</p>
+    </div>
+    <script src="scripts/navigation.js"></script>
+    <script src="scripts/coin.js"></script>
+    <script src="scripts/pump.js"></script>
+    <script src="scripts/friends.js"></script>
+    <script src="scripts/dailyBonus.js"></script>
+    <script src="scripts/trade.js"></script>
 </body>
 </html>
