@@ -89,3 +89,25 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 10000);
 });
+
+// Добавьте в конец файла
+window.addEventListener('storage', function(event) {
+    if (event.key === 'coinsCollected' || event.key === 'coinLimit' || 
+        event.key === 'coinValue' || event.key === 'upgradeCost' || 
+        event.key === 'autoCollectorLevel' || event.key === 'autoCollectorCost' || 
+        event.key === 'dailyBonusTime' || event.key === 'friendsCount') {
+        
+        // Обновляем переменные
+        coinsCollected = parseInt(localStorage.getItem('coinsCollected') || '0');
+        coinLimit = parseInt(localStorage.getItem('coinLimit') || '10000');
+        coinValue = parseInt(localStorage.getItem('coinValue') || '1');
+        upgradeCost = parseInt(localStorage.getItem('upgradeCost') || '100');
+        autoCollectorLevel = parseInt(localStorage.getItem('autoCollectorLevel') || '0');
+        autoCollectorCost = parseInt(localStorage.getItem('autoCollectorCost') || '20000');
+        dailyBonusTime = parseInt(localStorage.getItem('dailyBonusTime') || Date.now());
+        friendsInvited = parseInt(localStorage.getItem('friendsCount') || '0');
+        
+        // Обновляем UI
+        updateUI();
+    }
+});
