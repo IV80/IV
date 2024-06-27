@@ -1,27 +1,37 @@
 // scripts/friends.js
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
     const referralLink = document.getElementById('referralLink');
     const copyLinkButton = document.getElementById('copyLinkButton');
-    const friendsCount = document.getElementById('friendsCount');
+    const friendsCountElement = document.getElementById('friendsCount');
+    let friendsCount = 0;
+    let referralBonus = 10000;
 
-    let state = {
-        friendsCount: JSON.parse(localStorage.getItem('friendsCount')) || 0,
-    };
-
-    function saveState() {
-        localStorage.setItem('friendsCount', JSON.stringify(state.friendsCount));
+    function updateFriendsDisplay() {
+        friendsCountElement.textContent = `Friends Referred: ${friendsCount}`;
     }
 
-    function updateUI() {
-        friendsCount.textContent = state.friendsCount;
-        referralLink.value = `https://example.com/referral?code=XYZ123`;
+    function calculateReferralBonus() {
+        if (friendsCount <= 12) {
+            referralBonus *= 1.5;
+        } else if (friendsCount <= 30) {
+            referralBonus *= 1.05;
+        } else {
+            referralBonus = 3500000;
+        }
     }
 
     copyLinkButton.addEventListener('click', () => {
         referralLink.select();
         document.execCommand('copy');
-        alert('Referral link copied to clipboard!');
+        alert('Link copied to clipboard!');
     });
 
-    updateUI();
+    function addFriend() {
+        friendsCount++;
+        calculateReferralBonus();
+        updateFriendsDisplay();
+        // Add coins to user's balance
+    }
+
+    updateFriendsDisplay();
 });
