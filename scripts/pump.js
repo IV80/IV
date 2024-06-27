@@ -1,37 +1,52 @@
 // scripts/pump.js
-document.addEventListener('DOMContentLoaded', function() {
-    let coinValue = 1;
-    let upgradeCost = 100;
-    let autoCollectorLevel = 0;
-    let autoCollectorCost = 20000;
-    const maxCollectorLevel = 20;
-    const coinCountElement = document.getElementById('coin-count');
-    let coinCount = parseInt(coinCountElement.textContent.split(' / ')[0]);
+document.addEventListener('DOMContentLoaded', () => {
+    const upgradeButton = document.getElementById('upgradeButton');
+    const autoCollectorButton = document.getElementById('autoCollectorButton');
+    const coinValueElem = document.getElementById('coinValue');
+    const autoCollectorLevelElem = document.getElementById('autoCollectorLevel');
 
-    function updatePumpDisplay() {
-        document.getElementById('upgradeCost').textContent = upgradeCost;
-        document.getElementById('coinValue').textContent = coinValue;
-        document.getElementById('autoCollectorCost').textContent = autoCollectorCost;
-        document.getElementById('autoCollectorLevel').textContent = autoCollectorLevel;
+    let state = {
+        coins: JSON.parse(localStorage.getItem('coins')) || 0,
+        coinValue: JSON.parse(localStorage.getItem('coinValue')) || 1,
+        upgradeCost: JSON.parse(localStorage.getItem('upgradeCost')) || 100,
+        autoCollectorLevel: JSON.parse(localStorage.getItem('autoCollectorLevel')) || 0,
+        autoCollectorCost: JSON.parse(localStorage.getItem('autoCollectorCost')) || 20000,
+    };
+
+    function updateUI() {
+        coinValueElem.textContent = state.coinValue;
+        autoCollectorLevelElem.textContent = state.autoCollectorLevel;
+        document.getElementById('upgradeCost').textContent = state.upgradeCost;
+        document.getElementById('autoCollectorCost').textContent = state.autoCollectorCost;
     }
 
-    document.getElementById('upgradeButton').addEventListener('click', () => {
-        if (coinCount >= upgradeCost) {
-            coinCount -= upgradeCost;
-            coinValue *= 1.5; // Increase coin value
-            upgradeCost *= 3; // Increase upgrade cost by 3 times
-            updatePumpDisplay();
+    function saveState() {
+        localStorage.setItem('coins', JSON.stringify(state.coins));
+        localStorage.setItem('coinValue', JSON.stringify(state.coinValue));
+        localStorage.setItem('upgradeCost', JSON.stringify(state.upgradeCost));
+        localStorage.setItem('autoCollectorLevel', JSON.stringify(state.autoCollectorLevel));
+        localStorage.setItem('autoCollectorCost', JSON.stringify(state.autoCollectorCost));
+    }
+
+    upgradeButton.addEventListener('click', () => {
+        if (state.coins >= state.upgradeCost) {
+            state.coins -= state.upgradeCost;
+            state.coinValue += 1;
+            state.upgradeCost *= 2;
+            saveState();
+            updateUI();
         }
     });
 
-    document.getElementById('autoCollectorButton').addEventListener('click', () => {
-        if (coinCount >= autoCollectorCost && autoCollectorLevel < maxCollectorLevel) {
-            coinCount -= autoCollectorCost;
-            autoCollectorLevel++;
-            autoCollectorCost *= 2; // Increase cost by 2 times
-            updatePumpDisplay();
+    autoCollectorButton.addEventListener('click', () => {
+        if (state.coins >= state.autoCollectorCost) {
+            state.coins -= state.autoCollectorCost;
+            state.autoCollectorLevel += 1;
+            state.autoCollectorCost *= 2;
+            saveState();
+            updateUI();
         }
     });
 
-    updatePumpDisplay();
+    updateUI();
 });
