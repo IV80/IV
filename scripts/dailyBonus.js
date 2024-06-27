@@ -1,46 +1,47 @@
 // scripts/dailyBonus.js
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
     const claimBonusButton = document.getElementById('claimBonusButton');
     const bonusMessage = document.getElementById('bonusMessage');
     const bonusTimer = document.getElementById('bonusTimer');
+    let currentDay = 1;
+    let bonusAmount = 50;
+    let claimAvailable = true;
 
-    let state = {
-        dailyBonusCollectedAt: JSON.parse(localStorage.getItem('dailyBonusCollectedAt')) || null,
-        coins: JSON.parse(localStorage.getItem('coins')) || 0,
-    };
-
-    function saveState() {
-        localStorage.setItem('dailyBonusCollectedAt', JSON.stringify(state.dailyBonusCollectedAt));
-        localStorage.setItem('coins', JSON.stringify(state.coins));
+    function updateBonusDisplay() {
+        if (claimAvailable) {
+            bonusMessage.textContent = `Day ${currentDay}: Claim ${bonusAmount} coins`;
+        } else {
+            bonusMessage.textContent = `Come back tomorrow for your daily bonus!`;
+        }
     }
 
-    function updateUI() {
-        if (state.dailyBonusCollectedAt) {
-            const lastCollected = new Date(state.dailyBonusCollectedAt);
-            const now = new Date();
-            const hoursSinceLastCollected = (now - lastCollected) / (1000 * 60 * 60);
-
-            if (hoursSinceLastCollected < 24) {
-                claimBonusButton.disabled = true;
-                const hoursLeft = 24 - Math.floor(hoursSinceLastCollected);
-                bonusTimer.textContent = `You can claim your next bonus in ${hoursLeft} hours.`;
-                bonusMessage.textContent = '';
-                return;
+    function startBonusTimer() {
+        let timeLeft = 86400; // 24 hours in seconds
+        setInterval(() => {
+            if (timeLeft > 0) {
+                timeLeft--;
+                const hours = Math.floor(timeLeft / 3600);
+                const minutes = Math.floor((timeLeft % 3600) / 60);
+                const seconds = timeLeft % 60;
+                bonusTimer.textContent = `Next bonus in: ${hours}h ${minutes}m ${seconds}s`;
             }
-        }
-
-        claimBonusButton.disabled = false;
-        bonusTimer.textContent = '';
+        }, 1000);
     }
 
     claimBonusButton.addEventListener('click', () => {
-        const now = new Date();
-        state.dailyBonusCollectedAt = now.toISOString();
-        state.coins += 500; // Example bonus amount
-        saveState();
-        updateUI();
-        bonusMessage.textContent = 'You have successfully claimed your daily bonus!';
+        if (claimAvailable) {
+            // Add bonusAmount to user's balance
+            currentDay++;
+            bonusAmount = Math.min(bonusAmount * 3.5, 1000000);
+            if (currentDay > 20) {
+                currentDay = 1;
+                bonusAmount = 50;
+            }
+            claimAvailable = false;
+            updateBonusDisplay();
+            startBonusTimer();
+        }
     });
 
-    updateUI();
+    updateBonusDisplay();
 });
