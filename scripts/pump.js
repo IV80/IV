@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('upgradeButton').addEventListener('click', () => {
         if (coinCount >= upgradeCost) {
             coinCount -= upgradeCost;
-            coinValue *= 1.5; // Increase coin value
+            coinValue += 1; // Increase coin value
             upgradeCost *= 3; // Increase upgrade cost by 3 times
             updatePumpDisplay();
         }
