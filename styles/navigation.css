@@ -1,0 +1,29 @@
+/* styles/navigation.css */
+#nav {
+    display: flex;
+    justify-content: space-between;
+    background: #d4af37;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+}
+
+.tab-button {
+    flex-grow: 1;
+    padding: 10px;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    outline: none;
+    transition: background 0.3s;
+    text-align: center;
+}
+
+.tab-button:hover {
+    background: #b39231;
+}
+
+.tab-button.active {
+    background: #b39231;
+}
