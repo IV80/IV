@@ -22,18 +22,16 @@
 </head>
 <body>
     <div id="app">
-        <div id="coin-container">
-            <div id="coin">IV</div>
-        </div>
         <div id="coin-count-bar">
             <span id="coin-count">10000 / 10000</span>
         </div>
         <div id="content">
             <div id="home" class="tab-content active">
-                <p>Coins Collected: <span id="home-score">0</span></p>
+                <div id="coin" class="coin">IV</div>
+                <p id="home-score">Coins Collected: 0</p>
             </div>
             <div id="pump" class="tab-content">
-                <h2>Upgrade TAP</h2>
+                <h2>Pump</h2>
                 <button id="upgradeButton">Upgrade TAP (Cost: <span id="upgradeCost">100</span> coins)</button>
                 <p>Current coin value: <span id="coinValue">1</span> coins per click</p>
                 <h2>Auto Collector</h2>
@@ -42,7 +40,7 @@
             </div>
             <div id="friends" class="tab-content">
                 <h2>Friends</h2>
-                <input type="text" id="referralLink" readonly value="https://your-app-link/referral?code=123456">
+                <input type="text" id="referralLink" readonly>
                 <button id="copyLinkButton">Copy Link</button>
                 <p>Friends Referred: <span id="friendsCount">0</span></p>
             </div>
