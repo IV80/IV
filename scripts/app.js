@@ -12,12 +12,65 @@ document.addEventListener('DOMContentLoaded', function() {
     const autoCollectorCostSpan = document.getElementById('autoCollectorCost');
     const autoCollectorLevelSpan = document.getElementById('autoCollectorLevel');
 
-    let coinsCollected = localStorage.getItem('coinsCollected') ? parseInt(localStorage.getItem('coinsCollected')) : 0;
-    let coinLimit = localStorage.getItem('coinLimit') ? parseInt(localStorage.getItem('coinLimit')) : 10000;
-    let coinValue = localStorage.getItem('coinValue') ? parseInt(localStorage.getItem('coinValue')) : 1;
-    let upgradeCost = localStorage.getItem('upgradeCost') ? parseInt(localStorage.getItem('upgradeCost')) : 100;
-    let autoCollectorLevel = localStorage.getItem('autoCollectorLevel') ? parseInt(localStorage.getItem('autoCollectorLevel')) : 0;
-    let autoCollectorCost = localStorage.getItem('autoCollectorCost') ? parseInt(localStorage.getItem('autoCollectorCost')) : 20000;
+    let userId = localStorage.getItem('userId') || generateUserId();
+    localStorage.setItem('userId', userId);
+
+    let coinsCollected, coinLimit, coinValue, upgradeCost, autoCollectorLevel, autoCollectorCost;
+
+    function generateUserId() {
+        return Math.random().toString(36).substring(2, 10);
+    }
+
+    async function saveProgress() {
+        const data = {
+            userId,
+            coinsCollected,
+            coinLimit,
+            coinValue,
+            upgradeCost,
+            autoCollectorLevel,
+            autoCollectorCost
+        };
+
+        try {
+            await fetch('http://localhost:3000/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+        } catch (error) {
+            console.error('Error saving data:', error);
+        }
+    }
+
+    async function loadProgress() {
+        try {
+            const response = await fetch(`http://localhost:3000/load/${userId}`);
+            const data = await response.json();
+
+            if (data) {
+                coinsCollected = data.coinsCollected || 0;
+                coinLimit = data.coinLimit || 10000;
+                coinValue = data.coinValue || 1;
+                upgradeCost = data.upgradeCost || 100;
+                autoCollectorLevel = data.autoCollectorLevel || 0;
+                autoCollectorCost = data.autoCollectorCost || 20000;
+            } else {
+                coinsCollected = 0;
+                coinLimit = 10000;
+                coinValue = 1;
+                upgradeCost = 100;
+                autoCollectorLevel = 0;
+                autoCollectorCost = 20000;
+            }
+
+            updateUI();
+        } catch (error) {
+            console.error('Error loading data:', error);
+        }
+    }
 
     function updateUI() {
         homeScore.textContent = coinsCollected;
@@ -26,15 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
         upgradeCostSpan.textContent = upgradeCost;
         autoCollectorLevelSpan.textContent = autoCollectorLevel;
         autoCollectorCostSpan.textContent = autoCollectorCost;
-    }
-
-    function saveProgress() {
-        localStorage.setItem('coinsCollected', coinsCollected);
-        localStorage.setItem('coinLimit', coinLimit);
-        localStorage.setItem('coinValue', coinValue);
-        localStorage.setItem('upgradeCost', upgradeCost);
-        localStorage.setItem('autoCollectorLevel', autoCollectorLevel);
-        localStorage.setItem('autoCollectorCost', autoCollectorCost);
     }
 
     function addCoins(amount) {
@@ -75,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
     localStorage.setItem('userReferralCode', userReferralCode);
     referralLinkInput.value = `https://your-app-link/referral?code=${userReferralCode}`;
 
-    updateUI();
+    loadProgress();
 
     // Auto refill coins
     setInterval(() => {
