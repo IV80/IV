@@ -85,17 +85,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     loadProgress();
 
-    setInterval(() => {
-        if (coinLimit < 10000) {
-            coinLimit += 50;
-            if (coinLimit > 10000) {
-                coinLimit = 10000;
-            }
-            updateUI();
-            saveProgress();
-        }
-    }, 10000);
-
     window.addEventListener('storage', function(event) {
         if (event.key === 'coinsCollected' || event.key === 'coinLimit' || 
             event.key === 'coinValue' || event.key === 'upgradeCost' || 
