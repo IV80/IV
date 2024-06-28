@@ -25,10 +25,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function saveProgress() {
-        setCookie('coinValue', coinValue, 30);
-        setCookie('upgradeCost', upgradeCost, 30);
-        setCookie('autoCollectorLevel', autoCollectorLevel, 30);
-        setCookie('autoCollectorCost', autoCollectorCost, 30);
+        setCookie('coinValue', coinValue, 365);
+        setCookie('upgradeCost', upgradeCost, 365);
+        setCookie('autoCollectorLevel', autoCollectorLevel, 365);
+        setCookie('autoCollectorCost', autoCollectorCost, 365);
     }
 
     function loadProgress() {
