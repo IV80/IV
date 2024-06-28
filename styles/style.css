@@ -124,10 +124,3 @@ button {
 button:hover {
     background: #b39231;
 }
-
-/* Основной контейнер, который будет иметь фиксированное соотношение сторон */
-.aspect-ratio-container {
-    position: relative;
-    width: 100%;
-    padding-top: calc((5625 / 10000) * 100%);
-}
