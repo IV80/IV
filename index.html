@@ -22,6 +22,9 @@
 </head>
 <body>
     <div id="app">
+        <!-- Скрытое поле для идентификатора пользователя -->
+        <input type="hidden" id="userId" value="">
+
         <div id="coin-container">
             <div id="coin">IV</div>
         </div>
@@ -42,7 +45,7 @@
             </div>
             <div id="friends" class="tab-content">
                 <h2>Friends</h2>
-                <input type="text" id="referralLink" readonly value="https://your-app-link/referral?code=123456">
+                <input type="text" id="referralLink" readonly>
                 <button id="copyLinkButton">Copy Link</button>
                 <p>Friends Referred: <span id="friendsCount">0</span></p>
             </div>
