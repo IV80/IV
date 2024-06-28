@@ -79,26 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
         addCoins(coinValue);
     });
 
-    upgradeButton.addEventListener('click', () => {
-        if (coinsCollected >= upgradeCost) {
-            coinsCollected -= upgradeCost;
-            coinValue += 1;
-            upgradeCost *= 3;
-            updateUI();
-            saveProgress();
-        }
-    });
-
-    autoCollectorButton.addEventListener('click', () => {
-        if (coinsCollected >= autoCollectorCost && autoCollectorLevel < 20) {
-            coinsCollected -= autoCollectorCost;
-            autoCollectorLevel += 1;
-            autoCollectorCost *= 2;
-            updateUI();
-            saveProgress();
-        }
-    });
-
     const userReferralCode = getCookie('userReferralCode') || Math.random().toString(36).substring(2, 10);
     setCookie('userReferralCode', userReferralCode, 30);
     referralLinkInput.value = `https://your-app-link/referral?code=${userReferralCode}`;
