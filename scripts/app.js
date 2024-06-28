@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let userId = localStorage.getItem('userId') || generateUserId();
     localStorage.setItem('userId', userId);
 
-    let coinsCollected, coinLimit, coinValue, upgradeCost, autoCollectorLevel, autoCollectorCost;
+    let coinsCollected, coinLimit, coinValue, upgradeCost, autoCollectorLevel, autoCollectorCost, friendsReferred, currentDay;
 
     function generateUserId() {
         return Math.random().toString(36).substring(2, 10);
@@ -29,7 +29,9 @@ document.addEventListener('DOMContentLoaded', function() {
             coinValue,
             upgradeCost,
             autoCollectorLevel,
-            autoCollectorCost
+            autoCollectorCost,
+            friendsReferred,
+            currentDay
         };
 
         try {
@@ -57,6 +59,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 upgradeCost = data.upgradeCost || 100;
                 autoCollectorLevel = data.autoCollectorLevel || 0;
                 autoCollectorCost = data.autoCollectorCost || 20000;
+                friendsReferred = data.friendsReferred || 0;
+                currentDay = data.currentDay || 1;
             } else {
                 coinsCollected = 0;
                 coinLimit = 10000;
@@ -64,6 +68,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 upgradeCost = 100;
                 autoCollectorLevel = 0;
                 autoCollectorCost = 20000;
+                friendsReferred = 0;
+                currentDay = 1;
             }
 
             updateUI();
@@ -79,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
         upgradeCostSpan.textContent = upgradeCost;
         autoCollectorLevelSpan.textContent = autoCollectorLevel;
         autoCollectorCostSpan.textContent = autoCollectorCost;
+        friendsCount.textContent = friendsReferred;
     }
 
     function addCoins(amount) {
@@ -97,8 +104,8 @@ document.addEventListener('DOMContentLoaded', function() {
     upgradeButton.addEventListener('click', () => {
         if (coinsCollected >= upgradeCost) {
             coinsCollected -= upgradeCost;
-            coinValue += 1;  // Увеличение на 1 монету
-            upgradeCost *= 3;  // Увеличение стоимости в 3 раза
+            coinValue += 1;
+            upgradeCost *= 3;
             updateUI();
             saveProgress();
         }
