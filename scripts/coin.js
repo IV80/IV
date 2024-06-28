@@ -4,9 +4,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const coinCountBar = document.getElementById('coin-count');
     const homeScore = document.getElementById('home-score');
 
-    let coinsCollected = localStorage.getItem('coinsCollected') ? parseInt(localStorage.getItem('coinsCollected')) : 0;
-    let coinLimit = localStorage.getItem('coinLimit') ? parseInt(localStorage.getItem('coinLimit')) : 10000;
-    let coinValue = localStorage.getItem('coinValue') ? parseInt(localStorage.getItem('coinValue')) : 1;
+    // Функции для работы с cookie
+    function setCookie(name, value, days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`;
+    }
+
+    function getCookie(name) {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const c = cookies[i].trim();
+            if (c.startsWith(name + '=')) {
+                return c.substring(name.length + 1);
+            }
+        }
+        return '';
+    }
+
+    // Инициализация значений с использованием cookie
+    let coinsCollected = getCookie('coinsCollected') ? parseInt(getCookie('coinsCollected')) : 0;
+    let coinLimit = getCookie('coinLimit') ? parseInt(getCookie('coinLimit')) : 10000;
+    let coinValue = getCookie('coinValue') ? parseInt(getCookie('coinValue')) : 1;
 
     function updateCoinCountBar() {
         coinCountBar.textContent = `${coinLimit} / 10000`;
@@ -18,19 +37,20 @@ document.addEventListener('DOMContentLoaded', function() {
             coinLimit -= amount;
             homeScore.textContent = coinsCollected;
             updateCoinCountBar();
-            localStorage.setItem('coinsCollected', coinsCollected);
-            localStorage.setItem('coinLimit', coinLimit);
+            // Сохранение значений в cookie
+            setCookie('coinsCollected', coinsCollected, 365);
+            setCookie('coinLimit', coinLimit, 365);
         }
     }
 
     coin.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevents default browser behavior
+        e.preventDefault(); // Предотвращает стандартное поведение браузера
         addCoins(coinValue);
     });
 
     updateCoinCountBar();
 
-    // Auto refill coins
+    // Автоматическое пополнение монет
     setInterval(() => {
         if (coinLimit < 10000) {
             coinLimit += 50;
@@ -38,7 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 coinLimit = 10000;
             }
             updateCoinCountBar();
-            localStorage.setItem('coinLimit', coinLimit);
+            // Обновление значения в cookie
+            setCookie('coinLimit', coinLimit, 365);
         }
     }, 10000);
 
