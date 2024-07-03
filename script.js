@@ -1,5 +1,5 @@
 // Замените YOUR_API_KEY на ваш ключ API от OpenWeatherMap
-const API_KEY = 'YOUR_API_KEY';
+const API_KEY = '73c4f3a77243bf47fa35ebd67100966c';
 
 document.addEventListener('DOMContentLoaded', () => {
     if ('geolocation' in navigator) {
