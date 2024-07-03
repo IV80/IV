@@ -1,52 +1,39 @@
 // Замените YOUR_API_KEY на ваш ключ API от OpenWeatherMap
 const API_KEY = 'c8a2087a4da0637a03ab86da22af2e53';
 
-document.addEventListener('DOMContentLoaded', () => {
-    if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-            const { latitude, longitude } = position.coords;
-            const weatherData = await getWeather(latitude, longitude);
-            displayWeather(weatherData);
-        }, showError);
-    } else {
-        alert('Geolocation is not supported by your browser');
+document.addEventListener('DOMContentLoaded', async () => {
+    const map = L.map('map').setView([51.505, -0.09], 2);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    try {
+        const weatherData = await getWeatherData();
+        addWeatherMarkers(map, weatherData);
+    } catch (error) {
+        console.error("Error fetching weather data:", error);
     }
 });
 
-async function getWeather(lat, lon) {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`);
+async function getWeatherData() {
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/find?lat=0&lon=0&cnt=50&units=metric&appid=${API_KEY}`);
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
     const data = await response.json();
-    return data;
+    console.log("Weather data:", data);  // Debug line
+    return data.list;
 }
 
-function displayWeather(data) {
-    const weatherDiv = document.getElementById('weather');
-    if (data && data.weather && data.weather.length > 0) {
-        const weather = data.weather[0];
-        weatherDiv.innerHTML = `
-            <p><strong>${data.name}</strong></p>
-            <p>${weather.description}</p>
-            <p>Temperature: ${data.main.temp}°C</p>
+function addWeatherMarkers(map, weatherData) {
+    weatherData.forEach(city => {
+        const marker = L.marker([city.coord.lat, city.coord.lon]).addTo(map);
+        const popupContent = `
+            <strong>${city.name}</strong><br>
+            Temperature: ${city.main.temp}°C<br>
+            Weather: ${city.weather[0].description}
         `;
-    } else {
-        weatherDiv.innerHTML = '<p>Unable to retrieve weather data</p>';
-    }
-}
-
-function showError(error) {
-    const weatherDiv = document.getElementById('weather');
-    switch (error.code) {
-        case error.PERMISSION_DENIED:
-            weatherDiv.innerHTML = "<p>User denied the request for Geolocation.</p>";
-            break;
-        case error.POSITION_UNAVAILABLE:
-            weatherDiv.innerHTML = "<p>Location information is unavailable.</p>";
-            break;
-        case error.TIMEOUT:
-            weatherDiv.innerHTML = "<p>The request to get user location timed out.</p>";
-            break;
-        case error.UNKNOWN_ERROR:
-            weatherDiv.innerHTML = "<p>An unknown error occurred.</p>";
-            break;
-    }
+        marker.bindPopup(popupContent);
+    });
 }
