@@ -8,23 +8,27 @@ document.addEventListener('DOMContentLoaded', () => {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Добавление слоя облаков
-    const cloudsLayer = L.tileLayer(`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {
+    // Добавление слоя с грозовыми облаками и важными облаками
+    const thunderstormLayer = L.tileLayer(`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {
         attribution: '&copy; <a href="https://openweathermap.org/">OpenWeatherMap</a>',
-        opacity: 0.6
+        opacity: 0.7,
+        maxZoom: 10,
+        updateWhenIdle: true
     });
 
-    cloudsLayer.addTo(map);
+    thunderstormLayer.addTo(map);
 
     // Добавление слоя температур
     const temperatureLayer = L.tileLayer(`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {
         attribution: '&copy; <a href="https://openweathermap.org/">OpenWeatherMap</a>',
-        opacity: 0.7
+        opacity: 0.6,
+        maxZoom: 10,
+        updateWhenIdle: true
     });
 
     // Добавление управления слоями карты
     const layersControl = {
-        "Clouds": cloudsLayer,
+        "Thunderstorm Clouds": thunderstormLayer,
         "Temperature": temperatureLayer
     };
 
@@ -60,7 +64,7 @@ function addWeatherLabels(map, weatherData) {
     weatherData.forEach(city => {
         const { lat, lon } = city.coord;
         const temp = city.main.temp;
-        
+
         // Добавление текстовой метки температуры на карту
         const label = L.divIcon({
             className: 'temperature-label',
