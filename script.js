@@ -1,47 +1,63 @@
-// Замените YOUR_API_KEY на ваш ключ API от OpenWeatherMap
 const API_KEY = 'c8a2087a4da0637a03ab86da22af2e53';
 
-document.addEventListener('DOMContentLoaded', async () => {
-    // Инициализация карты с начальным видом
-    const map = L.map('map').setView([51.505, -0.09], 2);
+document.addEventListener('DOMContentLoaded', () => {
+    const map = L.map('map', {
+        gestureHandling: true
+    }).setView([51.505, -0.09], 2);
 
     // Добавление базового слоя карты
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Добавление слоев для облаков и гроз
-    const cloudsLayer = L.tileLayer(`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {
+    // Добавление комбинированного слоя облаков и осадков
+    const combinedLayer = L.tileLayer(`https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {
         attribution: '&copy; <a href="https://openweathermap.org/">OpenWeatherMap</a>',
         opacity: 0.5
     });
 
-    const stormsLayer = L.tileLayer(`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {
+    const precipitationLayer = L.tileLayer(`https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {
         attribution: '&copy; <a href="https://openweathermap.org/">OpenWeatherMap</a>',
         opacity: 0.5
     });
 
-    // Добавление управления слоями карты
+    // Комбинированный слой: облака и осадки
+    const combinedWeatherLayer = L.layerGroup([combinedLayer, precipitationLayer]);
+
+    combinedWeatherLayer.addTo(map);
+
+    // Добавление слоя температур
+    const temperatureLayer = L.tileLayer(`https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=${API_KEY}`, {
+        attribution: '&copy; <a href="https://openweathermap.org/">OpenWeatherMap</a>',
+        opacity: 0.6
+    });
+
     const layersControl = {
         "Base Map": map,
-        "Clouds": cloudsLayer,
-        "Storms": stormsLayer
+        "Clouds and Precipitation": combinedWeatherLayer,
+        "Temperature": temperatureLayer
     };
 
-    L.control.layers(layersControl).addTo(map);
+    L.control.layers(null, layersControl).addTo(map);
 
-    // Получение и отображение данных о погоде
-    try {
-        const weatherData = await getWeatherData();
-        addWeatherMarkers(map, weatherData);
-    } catch (error) {
-        console.error("Error fetching weather data:", error);
+    // Определение текущей локации пользователя
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+            const { latitude, longitude } = position.coords;
+            map.setView([latitude, longitude], 10);
+            getWeatherData(latitude, longitude).then(weatherData => {
+                addWeatherMarkers(map, weatherData);
+            });
+        }, () => {
+            console.error("Unable to retrieve location.");
+        });
+    } else {
+        console.error("Geolocation is not supported by this browser.");
     }
 });
 
-async function getWeatherData() {
-    // Запрос на получение данных о погоде
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/find?lat=0&lon=0&cnt=50&units=metric&appid=${API_KEY}`);
+async function getWeatherData(lat, lon) {
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/find?lat=${lat}&lon=${lon}&cnt=10&units=metric&appid=${API_KEY}`);
     if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -51,7 +67,6 @@ async function getWeatherData() {
 }
 
 function addWeatherMarkers(map, weatherData) {
-    // Добавление маркеров на карту
     weatherData.forEach(city => {
         const marker = L.marker([city.coord.lat, city.coord.lon]).addTo(map);
         const popupContent = `
