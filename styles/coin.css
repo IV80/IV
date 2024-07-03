@@ -1,0 +1,37 @@
+/* styles/coin.css */
+#coin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px; /* Увеличиваем размер контейнера */
+    background-color: #ffebcd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+#coin {
+    width: 250px; /* Увеличиваем коин */
+    height: 250px;
+    background-color: #d4af37;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 80px;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.1s;
+    text-align: center;
+    line-height: 250px;
+}
+
+#coin:hover {
+    transform: scale(1.1);
+}
+
+#coin:active {
+    transform: scale(1);
+}
