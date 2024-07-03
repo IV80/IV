@@ -54,6 +54,7 @@ body {
 .tab-content {
     display: none;
     text-align: center;
+    overflow-y: auto;
 }
 
 .tab-content.active {
