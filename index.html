@@ -3,38 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Веб-приложение с вкладками</title>
+    <title>Приложение для погоды</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         body {
             font-family: Arial, sans-serif;
         }
-        .tab-container {
-            display: flex;
-            justify-content: space-around;
+        #map {
+            height: 600px;
+            width: 100%;
             margin-top: 20px;
         }
-        .tab {
-            padding: 10px 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            cursor: pointer;
+        .controls {
+            margin-top: 10px;
         }
-        .tab a {
-            text-decoration: none;
-            color: black;
+        .controls select, .controls input {
+            padding: 5px;
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
 
-    <h1>Веб-приложение с вкладками</h1>
-    <div class="tab-container">
-        <div class="tab"><a href="https://ivsim.netlify.app">IVsim</a></div>
-        <div class="tab"><a href="https://ivgame.netlify.app">IVtest(game)</a></div>
-        <div class="tab"><a href="https://ivweather.netlify.app">IVweather</a></div>
-        <div class="tab"><a href="https://">Вкладка 4</a></div>
-        <div class="tab"><a href="https://">Вкладка 5</a></div>
+    <h1>Приложение для погоды</h1>
+    <div class="controls">
+        <label for="map-type">Тип карты:</label>
+        <select id="map-type">
+            <option value="terrain">Карта с рельефом</option>
+            <option value="precipitation">Карта с осадками</option>
+            <option value="temperature">Карта с температурой</option>
+        </select>
+        <label for="location">Локация:</label>
+        <input type="text" id="location" placeholder="Введите локацию">
+        <button onclick="searchLocation()">Найти</button>
     </div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="script.js"></script>
 
 </body>
 </html>
