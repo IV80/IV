@@ -1,0 +1,25 @@
+/* styles/shop.css */
+
+#shop {
+    padding: 10px;
+}
+
+#shop-tabs {
+    margin-bottom: 10px;
+}
+
+#shop-tabs .tab-button {
+    margin: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.shop-tab-content {
+    display: none;
+}
+
+.shop-tab-content p {
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+}
