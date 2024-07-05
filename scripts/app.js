@@ -66,19 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
         currentDaySpan.textContent = currentDay;
     }
 
-    function addCoins(amount) {
-        if (coinLimit >= amount) {
-            coinsCollected += amount;
-            coinLimit -= amount;
-            updateUI();
-            saveProgress();
-        }
-    }
-
-    coin.addEventListener('click', () => {
-        addCoins(coinValue);
-    });
-
     const userReferralCode = getCookie('userReferralCode') || Math.random().toString(36).substring(2, 10);
     setCookie('userReferralCode', userReferralCode, 30);
     referralLinkInput.value = `https://your-app-link/referral?code=${userReferralCode}`;
