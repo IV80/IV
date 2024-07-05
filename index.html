@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="styles/friends.css">
     <link rel="stylesheet" href="styles/dailyBonus.css">
     <link rel="stylesheet" href="styles/trade.css">
+    <link rel="stylesheet" href="styles/event.css">
+    <link rel="stylesheet" href="styles/shop.css">
     <script src="https://unpkg.com/i18next@21.8.15/i18next.min.js"></script>
     <script src="scripts/app.js" defer></script>
     <script src="scripts/navigation.js" defer></script>
@@ -19,10 +21,11 @@
     <script src="scripts/friends.js" defer></script>
     <script src="scripts/dailyBonus.js" defer></script>
     <script src="scripts/trade.js" defer></script>
+    <script src="scripts/event.js" defer></script>
+    <script src="scripts/shop.js" defer></script>
 </head>
 <body>
     <div id="app">
-        <!-- Скрытое поле для идентификатора пользователя -->
         <input type="hidden" id="userId" value="">
 
         <div id="coin-container">
@@ -59,6 +62,52 @@
                 <h2>Trade</h2>
                 <p>Trading is coming soon. Stay tuned!</p>
             </div>
+            <div id="event" class="tab-content">
+                <h2>Event</h2>
+                <div id="event-tabs">
+                    <button class="tab-button" data-tab="tab-1">Tab 1</button>
+                    <button class="tab-button" data-tab="tab-2">Tab 2</button>
+                    <button class="tab-button" data-tab="tab-3">Tab 3</button>
+                    <button class="tab-button" data-tab="tab-4">Tab 4</button>
+                    <button class="tab-button" data-tab="tab-5">Tab 5</button>
+                </div>
+                <div id="tab-1" class="tab-content event-tab-content">
+                    <!-- Карточки для первой вкладки -->
+                </div>
+                <div id="tab-2" class="tab-content event-tab-content" style="display:none;">
+                    <!-- Карточки для второй вкладки -->
+                </div>
+                <div id="tab-3" class="tab-content event-tab-content" style="display:none;">
+                    <!-- Карточки для третьей вкладки -->
+                </div>
+                <div id="tab-4" class="tab-content event-tab-content" style="display:none;">
+                    <!-- Карточки для четвертой вкладки -->
+                </div>
+                <div id="tab-5" class="tab-content event-tab-content" style="display:none;">
+                    <!-- Карточки для пятой вкладки -->
+                </div>
+            </div>
+            <div id="shop" class="tab-content">
+                <h2>Shop</h2>
+                <div id="shop-tabs">
+                    <button class="tab-button" data-tab="shop-tab-1">Обычный</button>
+                    <button class="tab-button" data-tab="shop-tab-2">Редкий</button>
+                    <button class="tab-button" data-tab="shop-tab-3">Мифический</button>
+                    <button class="tab-button" data-tab="shop-tab-4">Легендарный</button>
+                </div>
+                <div id="shop-tab-1" class="tab-content shop-tab-content">
+                    <p>Контент для Обычный</p>
+                </div>
+                <div id="shop-tab-2" class="tab-content shop-tab-content" style="display:none;">
+                    <p>Контент для Редкий</p>
+                </div>
+                <div id="shop-tab-3" class="tab-content shop-tab-content" style="display:none;">
+                    <p>Контент для Мифический</p>
+                </div>
+                <div id="shop-tab-4" class="tab-content shop-tab-content" style="display:none;">
+                    <p>Контент для Легендарный</p>
+                </div>
+            </div>
         </div>
         <div id="nav">
             <button class="tab-button active" data-tab="home">Home</button>
@@ -66,6 +115,8 @@
             <button class="tab-button" data-tab="friends">Friends</button>
             <button class="tab-button" data-tab="daily-bonus">Daily Bonus</button>
             <button class="tab-button" data-tab="trade" disabled>Trade</button>
+            <button class="tab-button" data-tab="event">Event</button>
+            <button class="tab-button" data-tab="shop">Shop</button>
         </div>
     </div>
 </body>
