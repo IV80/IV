@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     currentPrice = cardInitialPrice;
                 }
                 card.dataset.price = currentPrice;
+                card.dataset.title = cardTitles[`tab${i}`][j];
                 card.textContent = cardTitles[`tab${i}`][j];
                 card.addEventListener('click', () => handleCardClick(card, cardKey));
                 tabContent.appendChild(card);
@@ -91,11 +92,53 @@ document.addEventListener('DOMContentLoaded', () => {
     // Обработка кликов по карточкам
     function handleCardClick(card, cardKey) {
         const currentPrice = parseInt(card.dataset.price);
-        const message = `Do you want to buy for ${currentPrice} coins?`;
-        if (confirm(message)) {
+        const cardTitle = card.dataset.title;
+        showModal(cardTitle, currentPrice, () => {
             const newPrice = currentPrice * 2;
             card.dataset.price = newPrice;
             setCookie(cardKey, newPrice, 365);
+            hideModal();
+        });
+    }
+
+    // Функция показа модального окна
+    function showModal(title, price, onConfirm) {
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+
+        const modalContent = document.createElement('div');
+        modalContent.className = 'modal-content';
+
+        const modalTitle = document.createElement('h2');
+        modalTitle.textContent = `Do you want to buy "${title}" for ${price} coins?`;
+        modalContent.appendChild(modalTitle);
+
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'modal-button-container';
+
+        const confirmButton = document.createElement('button');
+        confirmButton.textContent = 'Buy';
+        confirmButton.className = 'modal-button';
+        confirmButton.addEventListener('click', onConfirm);
+
+        const cancelButton = document.createElement('button');
+        cancelButton.textContent = 'Cancel';
+        cancelButton.className = 'modal-button';
+        cancelButton.addEventListener('click', hideModal);
+
+        buttonContainer.appendChild(confirmButton);
+        buttonContainer.appendChild(cancelButton);
+
+        modalContent.appendChild(buttonContainer);
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
+    }
+
+    // Функция скрытия модального окна
+    function hideModal() {
+        const modal = document.querySelector('.modal');
+        if (modal) {
+            modal.remove();
         }
     }
 });
