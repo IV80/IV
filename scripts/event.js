@@ -16,6 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Инициализация баланса монет
+    let coinBalance = parseInt(getCookie('coinBalance')) || 0; // Предположим, начальный баланс 0 монет
+    updateCoinBalanceDisplay(coinBalance);
+
     // Функция установки куки
     function setCookie(name, value, days) {
         const d = new Date();
@@ -41,25 +45,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return "";
     }
 
-    // Функции для работы с балансом
-    function getBalance() {
-        return parseInt(document.getElementById('coin-count').innerText.split(' ')[0]);
-    }
-
-    function updateBalance(newBalance) {
-        document.getElementById('coin-count').innerText = `${newBalance} / 10000`;
-    }
-
-    // Функция для сохранения прогресса (если требуется)
-    function saveProgress() {
-        // Логика сохранения прогресса (может быть отправка данных на сервер или сохранение в localStorage)
-        console.log('Progress saved');
-    }
-
-    // Функция для обновления отображения (если требуется)
-    function updateEventDisplay() {
-        // Логика для обновления отображения вкладки Event (может быть обновление элементов интерфейса)
-        console.log('Event display updated');
+    // Обновление отображения баланса монет
+    function updateCoinBalanceDisplay(balance) {
+        // Предположим, есть элемент с id 'coinBalance' для отображения текущего баланса
+        const coinBalanceElement = document.getElementById('coinBalance');
+        if (coinBalanceElement) {
+            coinBalanceElement.textContent = `Баланс: ${balance} монет`;
+        }
     }
 
     // Названия карточек для всех вкладок
@@ -115,17 +107,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentPrice = parseInt(card.dataset.price);
         const cardTitle = card.dataset.title;
         showModal(cardTitle, currentPrice, () => {
-            const balance = getBalance();
-            if (balance >= currentPrice) {
+            if (coinBalance >= currentPrice) {
+                coinBalance -= currentPrice;
+                updateCoinBalanceDisplay(coinBalance);
+                setCookie('coinBalance', coinBalance, 365);
+
                 const newPrice = currentPrice * 2;
                 card.dataset.price = newPrice;
                 setCookie(cardKey, newPrice, 365);
-                updateBalance(balance - currentPrice);
-                updateEventDisplay();
-                saveProgress();
                 hideModal();
             } else {
-                alert('Not enough coins to make this purchase.');
+                alert("Недостаточно монет для покупки этой карточки!");
+                hideModal();
             }
         });
     }
@@ -139,19 +132,19 @@ document.addEventListener('DOMContentLoaded', () => {
         modalContent.className = 'modal-content';
 
         const modalTitle = document.createElement('h2');
-        modalTitle.textContent = `Do you want to buy "${title}" for ${price} coins?`;
+        modalTitle.textContent = `Вы хотите купить "${title}" за ${price} монет?`;
         modalContent.appendChild(modalTitle);
 
         const buttonContainer = document.createElement('div');
         buttonContainer.className = 'modal-button-container';
 
         const confirmButton = document.createElement('button');
-        confirmButton.textContent = 'Buy';
+        confirmButton.textContent = 'Купить';
         confirmButton.className = 'modal-button';
         confirmButton.addEventListener('click', onConfirm);
 
         const cancelButton = document.createElement('button');
-        cancelButton.textContent = 'Cancel';
+        cancelButton.textContent = 'Отмена';
         cancelButton.className = 'modal-button';
         cancelButton.addEventListener('click', hideModal);
 
