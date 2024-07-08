@@ -50,6 +50,18 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('coin-count').innerText = `${newBalance} / 10000`;
     }
 
+    // Функция для сохранения прогресса (если требуется)
+    function saveProgress() {
+        // Логика сохранения прогресса (может быть отправка данных на сервер или сохранение в localStorage)
+        console.log('Progress saved');
+    }
+
+    // Функция для обновления отображения (если требуется)
+    function updateEventDisplay() {
+        // Логика для обновления отображения вкладки Event (может быть обновление элементов интерфейса)
+        console.log('Event display updated');
+    }
+
     // Названия карточек для всех вкладок
     const cardTitles = {
         tab1: [
@@ -109,6 +121,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 card.dataset.price = newPrice;
                 setCookie(cardKey, newPrice, 365);
                 updateBalance(balance - currentPrice);
+                updateEventDisplay();
+                saveProgress();
                 hideModal();
             } else {
                 alert('Not enough coins to make this purchase.');
