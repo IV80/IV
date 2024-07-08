@@ -41,6 +41,15 @@ document.addEventListener('DOMContentLoaded', () => {
         return "";
     }
 
+    // Функции для работы с балансом
+    function getBalance() {
+        return parseInt(document.getElementById('coin-count').innerText.split(' ')[0]);
+    }
+
+    function updateBalance(newBalance) {
+        document.getElementById('coin-count').innerText = `${newBalance} / 10000`;
+    }
+
     // Названия карточек для всех вкладок
     const cardTitles = {
         tab1: [
@@ -94,10 +103,16 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentPrice = parseInt(card.dataset.price);
         const cardTitle = card.dataset.title;
         showModal(cardTitle, currentPrice, () => {
-            const newPrice = currentPrice * 2;
-            card.dataset.price = newPrice;
-            setCookie(cardKey, newPrice, 365);
-            hideModal();
+            const balance = getBalance();
+            if (balance >= currentPrice) {
+                const newPrice = currentPrice * 2;
+                card.dataset.price = newPrice;
+                setCookie(cardKey, newPrice, 365);
+                updateBalance(balance - currentPrice);
+                hideModal();
+            } else {
+                alert('Not enough coins to make this purchase.');
+            }
         });
     }
 
