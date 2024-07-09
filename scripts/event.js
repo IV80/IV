@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Инициализация баланса монет
     let coinCountElement = document.getElementById('coin-count');
+    let coinBalance = parseInt(getCookie('coinBalance')) || 0;
+    updateCoinBalanceDisplay();
 
     // Функция установки куки
     function setCookie(name, value, days) {
@@ -36,6 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         return '';
+    }
+
+    // Обновление отображения баланса монет
+    function updateCoinBalanceDisplay() {
+        if (coinCountElement) {
+            coinCountElement.textContent = coinBalance;
+        }
     }
 
     // Названия карточек для всех вкладок
@@ -71,9 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentPrice = parseInt(card.dataset.price);
         const cardTitle = card.dataset.title;
         showModal(cardTitle, currentPrice, () => {
-            if (coin-count >= currentPrice) {
-                coin-count -= currentPrice;
-                setCookie('coin-count', 365);
+            if (coinBalance >= currentPrice) {
+                coinBalance -= currentPrice;
+                updateCoinBalanceDisplay();
+                setCookie('coinBalance', coinBalance, 365);
 
                 const newPrice = currentPrice * 2;
                 card.dataset.price = newPrice;
@@ -127,11 +137,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function saveProgress() {
-        setCookie('coin-count', 365);
+        setCookie('coinBalance', coinBalance, 365);
     }
 
     function loadProgress() {
-        coin-count = parseInt(getCookie('coin-count')) || 0;
+        coinBalance = parseInt(getCookie('coinBalance')) || 0;
+        updateCoinBalanceDisplay();
     }
 
     loadProgress();
