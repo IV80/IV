@@ -18,8 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Инициализация баланса монет
     let coinCountElement = document.getElementById('coin-count');
-    let coinBalance = parseInt(getCookie('coinBalance')) || 0;
-    updateCoinBalanceDisplay();
+    let coinCount = parseInt(getCookie('coinCount')) || 0;
+    updatecoinCountDisplay();
 
     // Функция установки куки
     function setCookie(name, value, days) {
@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Обновление отображения баланса монет
-    function updateCoinBalanceDisplay() {
+    function updatecoinCountDisplay() {
         if (coinCountElement) {
-            coinCountElement.textContent = coinBalance;
+            coinCountElement.textContent = coinCount;
         }
     }
 
@@ -80,13 +80,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentPrice = parseInt(card.dataset.price);
         const cardTitle = card.dataset.title;
         showModal(cardTitle, currentPrice, () => {
-            if (coinBalance >= currentPrice) {
-                coinBalance -= currentPrice;
-                updateCoinBalanceDisplay();
-                setCookie('coinBalance', coinBalance, 365);
-
+            if (coinCount >= currentPrice) {
+                coinCount -= currentPrice;
+                updatecoinCountDisplay();
+                setCookie('coinCount', coinCount, 365);
                 const newPrice = currentPrice * 2;
-                card.dataset.price = newPrice;
+                card.datcoinBaset.price = newPrice;
                 card.textContent = `${cardTitle} (Цена: ${newPrice})`;
                 setCookie(cardKey, newPrice, 365);
                 hideModal();
@@ -137,12 +136,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function saveProgress() {
-        setCookie('coinBalance', coinBalance, 365);
+        setCookie('coinCount', coinCount, 365);
     }
 
     function loadProgress() {
-        coinBalance = parseInt(getCookie('coinBalance')) || 0;
-        updateCoinBalanceDisplay();
+        coinCount = parseInt(getCookie('coinCount')) || 0;
+        updatecoinCountDisplay();
     }
 
     loadProgress();
