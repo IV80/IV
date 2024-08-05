@@ -1,40 +1,38 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Веб-приложение с вкладками</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .tab-container {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 20px;
-        }
-        .tab {
-            padding: 10px 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .tab a {
-            text-decoration: none;
-            color: black;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мой Видео Сервис</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <h1>Веб-приложение с вкладками</h1>
-    <div class="tab-container">
-        <div class="tab"><a href="https://ivsim.netlify.app">IVsim</a></div>
-        <div class="tab"><a href="https://ivgame.netlify.app">IVtest(game)</a></div>
-        <div class="tab"><a href="https://ivweather.netlify.app">IVweather</a></div>
-        <div class="tab"><a href="https://">Вкладка 4</a></div>
-        <div class="tab"><a href="https://">Вкладка 5</a></div>
+  <header>
+    <div class="logo">
+      <h1>Мой Видео Сервис</h1>
     </div>
-
+    <div class="search-bar">
+      <input type="text" placeholder="Поиск видео...">
+      <button>Поиск</button>
+    </div>
+  </header>
+  <main>
+    <section class="recommended">
+      <h2>Рекомендованные видео</h2>
+      <div class="video-list">
+        <!-- Видео-миниатюры -->
+        <div class="video-item">
+          <img src="thumbnail1.jpg" alt="Видео 1">
+          <h3>Название Видео 1</h3>
+          <p>Описание видео...</p>
+        </div>
+        <!-- Другие видео -->
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 Мой Видео Сервис. Все права защищены.</p>
+  </footer>
+  <script src="app.js"></script>
 </body>
 </html>
