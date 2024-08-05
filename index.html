@@ -3,35 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Мой Видео Сервис</title>
+  <title>Альтернативный Видео Сервис</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
     <div class="logo">
-      <h1>Мой Видео Сервис</h1>
+      <h1>Альтернативный Видео Сервис</h1>
     </div>
     <div class="search-bar">
-      <input type="text" placeholder="Поиск видео...">
-      <button>Поиск</button>
+      <input type="text" id="search" placeholder="Поиск видео...">
+      <button onclick="searchVideos()">Поиск</button>
     </div>
   </header>
   <main>
-    <section class="recommended">
+    <section class="recommended" id="video-list">
       <h2>Рекомендованные видео</h2>
-      <div class="video-list">
-        <!-- Видео-миниатюры -->
-        <div class="video-item">
-          <img src="thumbnail1.jpg" alt="Видео 1">
-          <h3>Название Видео 1</h3>
-          <p>Описание видео...</p>
-        </div>
-        <!-- Другие видео -->
-      </div>
+      <!-- Видео-миниатюры будут загружены динамически -->
     </section>
   </main>
   <footer>
-    <p>&copy; 2024 Мой Видео Сервис. Все права защищены.</p>
+    <p>&copy; 2024 Альтернативный Видео Сервис. Все права защищены.</p>
   </footer>
   <script src="app.js"></script>
 </body>
