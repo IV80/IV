@@ -1,25 +1,31 @@
-const API_KEY = 'AIzaSyD0Y9KGP92HS3hRh3rSwB8EwPq0deHnKnE';
-const API_URL = 'https://www.googleapis.com/youtube/v3/search';
+const API_KEY = 'YOUR_API_KEY';
+const CHANNEL_ID = 'UC_x5XG1OV2P6uZZ5FSM9Ttw'; // Пример ID канала
+const apiUrl = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=5`;
 
-async function searchVideos() {
-  const query = document.getElementById('search').value;
-  const response = await fetch(`${API_URL}?part=snippet&q=${query}&key=${API_KEY}&maxResults=10&type=video`);
-  const data = await response.json();
-  displayVideos(data.items);
+async function fetchRecommendedVideos() {
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        displayVideos(data.items);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
 }
 
 function displayVideos(videos) {
-  const videoList = document.getElementById('video-list');
-  videoList.innerHTML = '';
-  videos.forEach(video => {
-    const videoItem = document.createElement('div');
-    videoItem.className = 'video-item';
-    videoItem.innerHTML = `
-      <img src="${video.snippet.thumbnails.medium.url}" alt="${video.snippet.title}">
-      <h3>${video.snippet.title}</h3>
-      <p>${video.snippet.description}</p>
-      <a href="https://www.youtube.com/watch?v=${video.id.videoId}" target="_blank">Смотреть на YouTube</a>
-    `;
-    videoList.appendChild(videoItem);
-  });
+    const videoContainer = document.querySelector('.content');
+    videoContainer.innerHTML = ''; // Очистка контейнера перед добавлением новых видео
+
+    videos.forEach(video => {
+        const videoElement = document.createElement('div');
+        videoElement.classList.add('video-item');
+        videoElement.innerHTML = `
+            <h3>${video.snippet.title}</h3>
+            <img src="${video.snippet.thumbnails.medium.url}" alt="${video.snippet.title}">
+            <p>${video.snippet.description}</p>
+        `;
+        videoContainer.appendChild(videoElement);
+    });
 }
+
+fetchRecommendedVideos();
