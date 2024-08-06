@@ -1,30 +1,46 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Альтернативный Видео Сервис</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моё приложение</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <div class="logo">
-      <h1>Альтернативный Видео Сервис</h1>
-    </div>
-    <div class="search-bar">
-      <input type="text" id="search" placeholder="Поиск видео...">
-      <button onclick="searchVideos()">Поиск</button>
-    </div>
-  </header>
-  <main>
-    <section class="recommended" id="video-list">
-      <h2>Рекомендованные видео</h2>
-      <!-- Видео-миниатюры будут загружены динамически -->
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2024 Альтернативный Видео Сервис. Все права защищены.</p>
-  </footer>
-  <script src="app.js"></script>
+    <header>
+        <div class="logo">
+            <img src="yandex-logo.png" alt="Yandex">
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Поиск">
+            <button>Поиск</button>
+        </div>
+        <div class="user-menu">
+            <img src="user-icon.png" alt="Профиль">
+        </div>
+    </header>
+    <main>
+        <aside class="sidebar">
+            <ul>
+                <li>Главная</li>
+                <li>Тренды</li>
+                <li>Подписки</li>
+                <li>Библиотека</li>
+            </ul>
+        </aside>
+        <section class="content">
+            <div class="video-player">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="video-details">
+                <h1>Название видео</h1>
+                <p>Описание видео...</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>© 2024 Моё приложение</p>
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
