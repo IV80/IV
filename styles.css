@@ -1,72 +1,130 @@
+/* Основные стили */
 body, html {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f5f5f5;
+    background-color: #fff;
     padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
 }
 
-.logo img {
-    height: 40px;
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+}
+
+.menu-icon, .logo, .upload-icon, .notifications-icon, .user-menu {
+    margin-right: 20px;
+}
+
+.menu-icon img, .logo img, .upload-icon img, .notifications-icon img, .user-menu img {
+    height: 24px;
+    cursor: pointer;
 }
 
 .search-bar {
     display: flex;
     flex: 1;
-    margin: 0 20px;
+    justify-content: center;
 }
 
 .search-bar input {
-    width: 100%;
+    width: 500px;
     padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
 }
 
 .search-bar button {
     padding: 10px;
+    border: none;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    margin-left: 5px;
 }
 
-.user-menu img {
-    height: 40px;
-    border-radius: 50%;
+.search-bar button:hover {
+    background-color: #e0e0e0;
 }
 
 main {
     display: flex;
+    margin-top: 60px; /* С учетом фиксированного хедера */
 }
 
 .sidebar {
-    width: 200px;
-    background-color: #f5f5f5;
-    padding: 20px;
+    width: 240px;
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+    overflow-y: auto;
+    padding-top: 20px;
 }
 
 .sidebar ul {
     list-style-type: none;
     padding: 0;
+    margin: 0;
 }
 
 .sidebar li {
-    margin: 15px 0;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.sidebar li:hover {
+    background-color: #f0f0f0;
 }
 
 .content {
-    flex: 1;
+    margin-left: 240px;
     padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+    height: calc(100vh - 60px);
 }
 
-.video-player iframe {
+.video-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.video-item {
+    width: calc(25% - 20px);
+    background-color: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.video-item img {
     width: 100%;
-    height: 500px;
 }
 
-.video-details {
-    margin-top: 20px;
+.video-item h3 {
+    font-size: 16px;
+    padding: 10px;
+    margin: 0;
+}
+
+.video-item p {
+    font-size: 14px;
+    padding: 0 10px 10px;
+    color: #777;
 }
 
 footer {
