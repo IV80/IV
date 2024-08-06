@@ -1,4 +1,4 @@
-const API_KEY = 'YOUR_API_KEY';
+const API_KEY = 'AIzaSyD0Y9KGP92HS3hRh3rSwB8EwPq0deHnKnE';
 const CHANNEL_ID = 'UC_x5XG1OV2P6uZZ5FSM9Ttw'; // Пример ID канала
 const apiUrl = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=5`;
 
